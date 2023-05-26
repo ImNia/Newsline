@@ -27,7 +27,7 @@ class NewsViewModel: ViewModel() {
                 }
 
                 override fun onFailure(call: Call<News>, t: Throwable) {
-                    Log.d("REQUEST_MODEL", "${t.printStackTrace()}")
+                    Log.d("REQUEST_MODEL", "Fail: ${t.printStackTrace()}")
                 }
 
             }

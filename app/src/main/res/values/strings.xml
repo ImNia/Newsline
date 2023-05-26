@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Newsline</string>
+    <string name="description_news_image">news image</string>
+    <string name="button_open">Open News</string>
+    <string name="title_news">Title</string>
+    <string name="date_news">date</string>
 </resources>
