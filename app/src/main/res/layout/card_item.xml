@@ -34,8 +34,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/title_news"
-                    android:textSize="24sp"
-                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    style="@style/title_item"/>
 
                 <TextView
                     android:id="@+id/date_published"
@@ -43,9 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/date_news"
-                    android:textSize="16sp"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary" />
+                    style="@style/sub_text_item" />
 
             </LinearLayout>
 

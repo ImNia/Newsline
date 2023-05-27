@@ -4,4 +4,6 @@
     <string name="button_open">Open News</string>
     <string name="title_news">Title</string>
     <string name="date_news">date</string>
+    <string name="title_error">An error has occurred</string>
+    <string name="button_retry">Retry</string>
 </resources>

@@ -32,11 +32,23 @@ class ViewHolder(itemView: View, private val clickListener: ClickListener) :
             .placeholder(R.drawable.default_image)
             .transform(RoundedCorners(4))
             .into(imageNews)
-        titleNews.text = data.title
-        publishedDate.text = data.published_date
+        titleNews.text = if(data.title.isEmpty()) {
+            "Not Title"
+        } else {
+            data.title
+        }
+        publishedDate.text = formattedDate(data.published_date)
 
         buttonOpenNews.setOnClickListener {
             clickListener.clickOpenWebSite(data)
         }
+    }
+
+    private fun formattedDate(date: String): String {
+        var format = SimpleDateFormat("yyyy-MM-dd")
+        val newDate = format.parse(date)
+        format = SimpleDateFormat("dd-MM-yyyy")
+        val date = format.format(newDate)
+        return "Publish date: $date"
     }
 }

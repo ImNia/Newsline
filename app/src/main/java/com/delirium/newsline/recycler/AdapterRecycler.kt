@@ -20,7 +20,6 @@ class AdapterRecycler(
     }
 
     override fun getItemCount() = news.size
-
 }
 
 interface ClickListener {
