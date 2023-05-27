@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.delirium.newsline.model.News
+import com.delirium.newsline.model.NewsItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +25,7 @@ class NewsViewModel: ViewModel() {
                 override fun onResponse(call: Call<News>, response: Response<News>) {
                     if (response.isSuccessful) {
                         dataReceived.value = DataState.RECEIVED
-                        newsLiveData.value = response.body() as News
+                        prepareDate(response.body() as News)
                         Log.d("REQUEST_MODEL", (response.body() as News).toString())
                     }
                 }
@@ -36,5 +37,15 @@ class NewsViewModel: ViewModel() {
 
             }
         )
+    }
+
+    private fun prepareDate(data: News) {
+        val prepareNews = mutableListOf<NewsItem>()
+        data.results.forEach {
+            if (it.url.isNotEmpty()) {
+                prepareNews.add(it)
+            }
+        }
+        newsLiveData.value = News(prepareNews)
     }
 }

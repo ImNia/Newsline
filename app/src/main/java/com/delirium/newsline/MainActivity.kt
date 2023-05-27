@@ -1,5 +1,7 @@
 package com.delirium.newsline
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -67,6 +69,9 @@ class MainActivity : AppCompatActivity(), ClickListener {
     }
 
     override fun clickOpenWebSite(item: NewsItem) {
-        TODO("Not yet implemented")
+        val address = Uri.parse(item.url)
+        Intent(Intent.ACTION_VIEW, address).apply {
+            startActivity(this)
+        }
     }
 }
