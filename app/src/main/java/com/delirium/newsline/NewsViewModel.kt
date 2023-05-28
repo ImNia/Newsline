@@ -19,12 +19,12 @@ class NewsViewModel: ViewModel() {
     }
 
     private fun getData() {
-        dataReceived.value = DataState.LOAD
+        dataReceived.postValue(DataState.LOAD)
         request.news("CVPxVQdA6BvGZQkycPAM9uG1CEk6pjsF").enqueue(
             object : Callback<News> {
                 override fun onResponse(call: Call<News>, response: Response<News>) {
                     if (response.isSuccessful) {
-                        dataReceived.value = DataState.RECEIVED
+                        dataReceived.postValue(DataState.RECEIVED)
                         prepareDate(response.body() as News)
                         Log.d("REQUEST_MODEL", (response.body() as News).toString())
                     }
@@ -32,7 +32,7 @@ class NewsViewModel: ViewModel() {
 
                 override fun onFailure(call: Call<News>, t: Throwable) {
                     Log.d("REQUEST_MODEL", "Fail: ${t.printStackTrace()}")
-                    dataReceived.value = DataState.ERROR
+                    dataReceived.postValue(DataState.ERROR)
                 }
 
             }
@@ -46,6 +46,7 @@ class NewsViewModel: ViewModel() {
                 prepareNews.add(it)
             }
         }
-        newsLiveData.value = News(prepareNews)
+//        newsLiveData.value = News(prepareNews)
+        newsLiveData.postValue(News(prepareNews))
     }
 }

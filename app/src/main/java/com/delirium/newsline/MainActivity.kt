@@ -5,15 +5,21 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.delirium.newsline.model.NewsItem
 import com.delirium.newsline.recycler.AdapterRecycler
 import com.delirium.newsline.recycler.ClickListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), ClickListener {
@@ -26,7 +32,6 @@ class MainActivity : AppCompatActivity(), ClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
-
         viewModel.newsLiveData.observe(this) {
             Log.d("TEST_MAIN", "GetData: $it")
             adapter.news = it.results
@@ -59,6 +64,27 @@ class MainActivity : AppCompatActivity(), ClickListener {
         loadData()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.update -> {
+                updateData()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun updateData() {
+        GlobalScope.launch(Dispatchers.IO) {
+            viewModel.loadData()
+        }
+    }
     private fun loadData() {
         setContentView(R.layout.activity_main)
         progressBar = findViewById(R.id.progress_bar)
