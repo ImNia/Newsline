@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.delirium.newsline.model.NewsItem
 import com.delirium.newsline.recycler.AdapterRecycler
 import com.delirium.newsline.recycler.ClickListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), ClickListener {
-    private lateinit var viewModel: NewsViewModel
+    private val viewModel by viewModel<NewsViewModel>()
     private lateinit var recycler: RecyclerView
     private val adapter = AdapterRecycler(this)
 
@@ -26,7 +27,6 @@ class MainActivity : AppCompatActivity(), ClickListener {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
         viewModel.newsLiveData.observe(this) {
             Log.d("TEST_MAIN", "GetData: $it")
             adapter.news = it.results
