@@ -20,7 +20,7 @@ class NewsViewModel: ViewModel() {
 
     private fun getData() {
         dataReceived.postValue(DataState.LOAD)
-        request.news("CVPxVQdA6BvGZQkycPAM9uG1CEk6pjsF").enqueue(
+        request.news(API_KEY).enqueue(
             object : Callback<News> {
                 override fun onResponse(call: Call<News>, response: Response<News>) {
                     if (response.isSuccessful) {
@@ -46,7 +46,10 @@ class NewsViewModel: ViewModel() {
                 prepareNews.add(it)
             }
         }
-//        newsLiveData.value = News(prepareNews)
         newsLiveData.postValue(News(prepareNews))
+    }
+
+    companion object {
+        const val API_KEY = "CVPxVQdA6BvGZQkycPAM9uG1CEk6pjsF"
     }
 }
